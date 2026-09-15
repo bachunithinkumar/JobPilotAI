@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="hero-label">SMARTER JOB SEARCHING</p>
+
+        <h1>
+            Find your next
+            <span>opportunity.</span>
+        </h1>
+
+        <p class="hero-description">
+            JobPilotAI helps you discover relevant jobs,
+            track applications, and manage your career journey.
+        </p>
+
+        <a href="{{ url_for('jobs') }}" class="primary-button">
+            Explore Jobs →
+        </a>
+
+    </div>
+
+    <div class="hero-card">
+
+        <div class="floating-icon">✦</div>
+
+        <h3>Your career journey</h3>
+
+        <p>Discover. Apply. Grow.</p>
+
+        <div class="progress-line"></div>
+
+        <small>AI-powered job discovery platform</small>
+
+    </div>
+
+</section>
+
+
+<section class="features-section">
+
+    <div class="section-heading">
+
+        <p class="hero-label">WHY JOBPILOTAI</p>
+
+        <h2>Everything you need to move forward</h2>
+
+    </div>
+
+
+    <div class="features-grid">
+
+        <div class="feature-card">
+            <div class="feature-icon">🔎</div>
+            <h3>Smart Job Search</h3>
+            <p>Find opportunities using keywords, locations and job types.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Application Tracking</h3>
+            <p>Keep track of every application from submission to outcome.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <h3>Career Progress</h3>
+            <p>Stay organised and move closer to your next opportunity.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="jobs-preview">
+
+    <div class="section-heading">
+
+        <p class="hero-label">LATEST OPPORTUNITIES</p>
+
+        <h2>Featured jobs</h2>
+
+    </div>
+
+    <div class="job-grid">
+
+        {% for job in jobs %}
+
+        <div class="job-card">
+
+            <div class="company-logo">
+                {{ job["company"][0] }}
+            </div>
+
+            <h3>{{ job["title"] }}</h3>
+
+            <p class="company-name">{{ job["company"] }}</p>
+
+            <div class="job-meta">
+                📍 {{ job["location"] }}
+            </div>
+
+            <div class="job-meta">
+                💼 {{ job["job_type"] }}
+            </div>
+
+            <p class="salary">{{ job["salary"] }}</p>
+
+            <a href="{{ url_for('jobs') }}" class="secondary-button">
+                View Job
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <p class="hero-label">OPPORTUNITIES</p>
+
+    <h1>Find your next job</h1>
+
+    <p>Search thousands of possibilities for your next career move.</p>
+
+</section>
+
+
+<section class="search-section">
+
+    <form method="GET" action="{{ url_for('jobs') }}" class="search-form">
+
+        <input type="text"
+               name="search"
+               placeholder="Job title or company"
+               value="{{ search }}">
+
+        <input type="text"
+               name="location"
+               placeholder="Location"
+               value="{{ location }}">
+
+        <select name="job_type">
+
+            <option value="">All Job Types</option>
+
+            <option value="Full-time"
+                {% if job_type == "Full-time" %}selected{% endif %}>
+                Full-time
+            </option>
+
+            <option value="Part-time"
+                {% if job_type == "Part-time" %}selected{% endif %}>
+                Part-time
+            </option>
+
+            <option value="Internship"
+                {% if job_type == "Internship" %}selected{% endif %}>
+                Internship
+            </option>
+
+        </select>
+
+        <button type="submit" class="primary-button">
+            Search
+        </button>
+
+    </form>
+
+</section>
+
+
+<section class="jobs-section">
+
+    <div class="results-heading">
+
+        <h2>{{ jobs|length }} jobs found</h2>
+
+    </div>
+
+
+    <div class="job-list">
+
+        {% for job in jobs %}
+
+        <div class="job-list-card">
+
+            <div class="company-logo large">
+                {{ job["company"][0] }}
+            </div>
+
+            <div class="job-main-info">
+
+                <h3>{{ job["title"] }}</h3>
+
+                <p class="company-name">{{ job["company"] }}</p>
+
+                <div class="job-tags">
+
+                    <span>📍 {{ job["location"] }}</span>
+
+                    <span>💼 {{ job["job_type"] }}</span>
+
+                </div>
+
+                <p class="job-description">
+                    {{ job["description"] }}
+                </p>
+
+            </div>
+
+            <div class="job-side">
+
+                <p class="salary">{{ job["salary"] }}</p>
+
+                <form method="POST"
+                      action="{{ url_for('apply', job_id=job['id']) }}">
+
+                    <button type="submit" class="primary-button">
+                        Apply Now
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <h3>No jobs found</h3>
+
+            <p>Try changing your search filters.</p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

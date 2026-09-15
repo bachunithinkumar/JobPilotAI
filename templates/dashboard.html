@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="page-header dashboard-header">
+
+    <p class="hero-label">YOUR CAREER DASHBOARD</p>
+
+    <h1>Welcome back, {{ session["user_name"] }} 👋</h1>
+
+    <p>Track your applications and manage your job search.</p>
+
+</section>
+
+
+<section class="stats-grid">
+
+    <div class="stat-card">
+
+        <div class="stat-icon">📁</div>
+
+        <div>
+            <p>Total Applications</p>
+            <h2>{{ total_applications }}</h2>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">📝</div>
+
+        <div>
+            <p>Applied</p>
+            <h2>{{ applied_count }}</h2>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">🎯</div>
+
+        <div>
+            <p>Interviews</p>
+            <h2>{{ interview_count }}</h2>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">🎉</div>
+
+        <div>
+            <p>Accepted</p>
+            <h2>{{ accepted_count }}</h2>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="applications-section">
+
+    <div class="section-heading">
+
+        <p class="hero-label">APPLICATION TRACKER</p>
+
+        <h2>Your applications</h2>
+
+    </div>
+
+
+    {% if applications %}
+
+    <div class="application-table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Job</th>
+                    <th>Company</th>
+                    <th>Location</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Applied Date</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for application in applications %}
+
+                <tr>
+
+                    <td>
+                        <strong>{{ application["title"] }}</strong>
+                    </td>
+
+                    <td>{{ application["company"] }}</td>
+
+                    <td>{{ application["location"] }}</td>
+
+                    <td>{{ application["job_type"] }}</td>
+
+                    <td>
+
+                        <span class="status {{ application['status']|lower|replace(' ', '-') }}">
+                            {{ application["status"] }}
+                        </span>
+
+                    </td>
+
+                    <td>{{ application["applied_date"][:10] }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-state">
+
+        <h3>No applications yet</h3>
+
+        <p>Start applying for jobs to see them here.</p>
+
+        <a href="{{ url_for('jobs') }}" class="primary-button">
+            Find Jobs
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
